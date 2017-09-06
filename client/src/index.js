@@ -1,7 +1,19 @@
+import "../node_modules/materialize-css/dist/css/materialize.min.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import ReactRedux from "react-redux";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import reduxThunk from "redux-thunk";
 
 import App from "./components/App";
+import reducers from "./reducers";
 
-ReactDOM.render(<App />, document.querySelector("#root"));
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+const appendToBody = document.querySelector("#root");
+
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	appendToBody
+);
